@@ -19,8 +19,11 @@ def get_users():
 def get_user(user_id):
     return collection.find_one({'user': user_id})
 
+def put_user(user_data):
+    collection.insert_one({"user": user_data.username, "password": user_data.password})
+
 def get_todos(username):
     return collection.find_one({'user': username}).get('todos')
 
-def put_user(user_data):
-    collection.insert_one({"user": user_data.username, "password": user_data.password})
+def put_todo(description, username):
+    collection.update_one({'user': username}, {'$push': {'todos': description}})
