@@ -19,6 +19,9 @@
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% endif %}
                 <li><a href="{{ url_for('index') }}">Inicio</a></li>
                 <li><a href="https://regulondb.ccg.unam.mx/" target="_blank">RegulonDB</a></li>
             </ul>
