@@ -17,10 +17,11 @@
         <a href="{{ url_for('index') }}">Dame clic para ver tu IP</a>
     {% endif %}
 
-
-    <ul>
-        {% for todo in todos %}
-            {{ macros.render_todo(todo) }}
-        {% endfor %}
-    </ul>
+    {% if todos %}
+        <ul>
+            {% for todo in todos %}
+                {{ macros.render_todo(todo) }}
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock  %}
