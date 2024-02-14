@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from bson import ObjectId
 
 load_dotenv()
 # Replace the placeholder with your Atlas connection string
@@ -26,7 +27,9 @@ def get_todos(username):
     return collection.find_one({'user': username}).get('todos')
 
 def put_todo(description, username):
-    collection.update_one({'user': username}, {'$push': {'todos': {'description': description, 'done': False}}})
+    nuevo_todo = {'_id': ObjectId(), 'description': description, 'done': False}
+    collection.update_one({'user': username}, {'$push': {'todos': nuevo_todo}})
 
-def delete_todo(todo_description, username):
-    collection.update_one({'user': username}, {'$pull': {'todos': {'description': todo_description}}})
+def delete_todo(todo_id, username):
+    id_object = ObjectId(todo_id)
+    collection.update_one({'user': username}, {'$pull': {'todos': {'_id': id_object}}})

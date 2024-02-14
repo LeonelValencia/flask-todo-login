@@ -3,7 +3,13 @@
 {% macro render_todo(todo, delete_form) %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
         Descripcion: {{ todo.description }}
-        <span class="badge bg-primary rounded-pill">{{todo.done}}</span>
-        {{ wtf.quick_form(delete_form, action=url_for('delete', todo_id=todo.description)) }}
+        <span class="badge bg-primary rounded-pill">
+            {% if todo.done %}
+                Done
+            {% else %}
+                To do
+            {% endif %}
+        </span>
+        {{ wtf.quick_form(delete_form, action=url_for('delete', todo_id=todo._id)) }}
     </li>
 {% endmacro %}
