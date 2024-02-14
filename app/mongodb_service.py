@@ -33,3 +33,8 @@ def put_todo(description, username):
 def delete_todo(todo_id, username):
     id_object = ObjectId(todo_id)
     collection.update_one({'user': username}, {'$pull': {'todos': {'_id': id_object}}})
+
+def update_todo(todo_id, username, done):
+    id_object = ObjectId(todo_id)
+    done = not bool(done)
+    collection.update_one({'user': username, 'todos._id': id_object}, {'$set': {'todos.$.done': done}})
