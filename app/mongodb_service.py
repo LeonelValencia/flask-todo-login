@@ -26,4 +26,7 @@ def get_todos(username):
     return collection.find_one({'user': username}).get('todos')
 
 def put_todo(description, username):
-    collection.update_one({'user': username}, {'$push': {'todos': description}})
+    collection.update_one({'user': username}, {'$push': {'todos': {'description': description, 'done': False}}})
+
+def delete_todo(todo_description, username):
+    collection.update_one({'user': username}, {'$pull': {'todos': {'description': todo_description}}})
